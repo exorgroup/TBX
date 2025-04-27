@@ -73,10 +73,6 @@ class PermissionCrudController_Extended extends CrudController
                 'min:3', 
                 'max:255', 
                 Rule::unique(config('permission.table_names.permissions', 'permissions'), 'name')
-            ],
-            'guard_name' => [
-                'required', 
-                Rule::in(array_keys(config('backpack.permissionmanager.guards', ['web' => 'web'])))
             ]
         ]);
 
@@ -99,10 +95,6 @@ class PermissionCrudController_Extended extends CrudController
                 'max:255', 
                 Rule::unique(config('permission.table_names.permissions', 'permissions'), 'name')
                     ->ignore(request()->id)
-            ],
-            'guard_name' => [
-                'required', 
-                Rule::in(array_keys(config('backpack.permissionmanager.guards', ['web' => 'web'])))
             ]
         ]);
 
