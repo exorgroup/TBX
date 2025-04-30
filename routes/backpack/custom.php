@@ -19,7 +19,8 @@ Route::group([
      // Override the original permission manager routes
     Route::crud('role', 'RoleCrudController_Extended');
     Route::crud('user', 'UserCrudController_Extended');
-    
+    Route::crud('audit', 'AuditController');
+    Route::get('audit/{modelType}/{modelId}', 'AuditController@getModelAudits');    
 }); // this should be the absolute last line of this file
 
 /**

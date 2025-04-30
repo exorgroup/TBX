@@ -1,0 +1,107 @@
+/* Fix for alert backgrounds */
+.alert-success {
+    background-color: #d1e7dd !important;
+    border-color: #badbcc !important;
+    color: #0f5132 !important;
+}
+
+.alert-warning {
+    background-color: #fff3cd !important;
+    border-color: #ffecb5 !important;
+    color: #664d03 !important;
+}
+
+.alert-danger {
+    background-color: #f8d7da !important;
+    border-color: #f5c2c7 !important;
+    color: #842029 !important;
+}
+
+.alert-info {
+    background-color: #cff4fc !important;
+    border-color: #b6effb !important;
+    color: #055160 !important;
+}
+
+/* Fix for Noty notifications if they're being used */
+.noty_theme__backstrap.noty_type__success {
+    background-color: #d1e7dd !important;
+    border-color: #badbcc !important;
+    color: #0f5132 !important;
+}
+
+/* Ensure alerts are visible and have proper padding */
+.alert {
+    padding: 1.5rem 1.75rem !important; /* Increased padding from 0.75rem 1.25rem */
+    margin-bottom: 1rem !important;
+    opacity: 1 !important;
+}
+
+/* Additional padding for toast notifications */
+.toast, .toast-container .toast {
+    padding: 20px !important; /* 10px more padding all around */
+}
+
+/* If the toast is using a different class, try these selectors as well */
+.toast-success, .toast-body, .toast .toast-body {
+    padding: 20px !important;
+}
+
+/* For Tabler theme toasts specifically */
+.toast-header {
+    padding: 15px 20px !important;
+}
+
+.toast-body {
+    padding: 20px !important;
+}
+
+/* Fix for Noty notifications */
+.noty_bar {
+    padding: 15px !important;
+}
+
+.noty_body {
+    padding: 10px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+.noty_theme__backstrap.noty_type__success {
+    background-color: #d1e7dd !important;
+    border-color: #badbcc !important;
+    color: #0f5132 !important;
+}
+
+/* Close button styling for Noty notifications */
+.noty_close_button {
+    padding: 3px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+    height: 30px !important;
+    text-align: center !important;
+    line-height: 1 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    margin-right: 3px !important;
+    margin-top: 3px !important;
+}
+
+/* Add hover effect to close button */
+.noty_close_button:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* For the progress bar */
+.noty_progressbar {
+    height: 4px !important;
+}
+
+/* Specific targeting for the Noty layout */
+#noty_layout__topRight .noty_bar {
+    margin: 10px !important;
+    padding: 15px !important;
+}
