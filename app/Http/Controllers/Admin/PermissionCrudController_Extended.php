@@ -9,6 +9,7 @@ use Backpack\PermissionManager\app\Http\Requests\PermissionStoreCrudRequest as S
 use Backpack\PermissionManager\app\Http\Requests\PermissionUpdateCrudRequest as UpdateRequest;
 use Spatie\Permission\PermissionRegistrar;
 use Illuminate\Validation\Rule;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 //use App\Http\Requests\Admin\ExtendedStoreRequest;
 //use App\Http\Requests\Admin\ExtendedUpdateRequest;
@@ -45,6 +46,7 @@ class PermissionCrudController_Extended extends CrudController
         }
     }
 
+
     public function setupListOperation()
     {
         $this->crud->addColumn([
@@ -65,18 +67,18 @@ class PermissionCrudController_Extended extends CrudController
     public function setupCreateOperation()
     {
         $this->addFields();
-      //  $this->crud->setValidation(StoreRequest::class);
+        //  $this->crud->setValidation(StoreRequest::class);
 
         $this->crud->setValidation([
             'name' => [
-                'required', 
-                'min:3', 
-                'max:255', 
+                'required',
+                'min:3',
+                'max:255',
                 Rule::unique(config('permission.table_names.permissions', 'permissions'), 'name')
             ]
         ]);
 
-      
+
 
         //otherwise, changes won't have effect
         app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
@@ -85,20 +87,20 @@ class PermissionCrudController_Extended extends CrudController
     public function setupUpdateOperation()
     {
         $this->addFields();
-     //   $this->crud->setValidation(UpdateRequest::class);
-        
+        //   $this->crud->setValidation(UpdateRequest::class);
+
         // Override validation directly with ID exception
         $this->crud->setValidation([
             'name' => [
-                'required', 
-                'min:3', 
-                'max:255', 
+                'required',
+                'min:3',
+                'max:255',
                 Rule::unique(config('permission.table_names.permissions', 'permissions'), 'name')
                     ->ignore(request()->id)
             ]
         ]);
 
-     
+
 
         //otherwise, changes won't have effect
         app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
