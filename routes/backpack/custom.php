@@ -16,11 +16,13 @@ Route::group([
     ),
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-     // Override the original permission manager routes
+    // Override the original permission manager routes
     Route::crud('role', 'RoleCrudController_Extended');
     Route::crud('user', 'UserCrudController_Extended');
-    Route::crud('audit', 'AuditController');
-    Route::get('audit/{modelType}/{modelId}', 'AuditController@getModelAudits');    
+    // Only allow access to users with Tax_Read permission
+    Route::group(['middleware' => ['can:Tax_Read']], function () {
+        Route::crud('tax', 'TaxCrudController');
+    });
 }); // this should be the absolute last line of this file
 
 /**
