@@ -6,8 +6,9 @@ use App\Helpers\ValidationIconHelper;
 use App\Http\Requests\TaxRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Http\Controllers\Admin\MyCrudController;
 
-class TaxCrudController extends CrudController
+class TaxCrudController extends MyCrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -28,6 +29,11 @@ class TaxCrudController extends CrudController
         CRUD::setModel(\App\Models\Tax::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/tax');
         CRUD::setEntityNameStrings('tax', 'taxes');
+
+        // Set the action column styling
+        $this->setActionsColumnWidth('320px');
+        $this->setActionsHeaderAlign('center');
+        $this->setActionsCellAlign('center');
 
         // Add permission checks for all operations
         if (!backpack_user()->can('Tax_Read')) {
@@ -53,8 +59,26 @@ class TaxCrudController extends CrudController
     protected function setupListOperation()
     {
         // Add columns for list view
-        CRUD::column('TaxID')->label('ID');
+
+        $this->crud->addColumn([
+            'name' => 'TaxID',
+            'label' => 'ID',
+            'type' => 'text',
+            'width' => '70px',
+            'headerAlign' => 'left',
+            'cellAlign' => 'right'
+        ]);
+
         CRUD::column('TaxName')->label('Tax Name');
+
+        $this->crud->addColumn([
+            'name' => 'TaxName',
+            'label' => 'Tax Names',
+            'type' => 'text',
+            'width' => '160px',
+            'headerAlign' => 'left',
+            'cellAlign' => 'left'
+        ]);
 
         // Add Tax Rate column with right alignment
         CRUD::addColumn([
@@ -64,10 +88,10 @@ class TaxCrudController extends CrudController
             'decimals' => 2,
             'prefix' => '',
             'suffix' => '%',
-            'wrapper' => [
-                'element' => 'span',
-                'class' => 'text-end d-block' // Right align the content
-            ],
+            // New properties:
+            'width' => '70px',           // Set column width
+            'headerAlign' => 'right',    // Align header text (left, center, right)
+            'cellAlign' => 'right'        // Align cell content (left, center, right)
         ]);
 
         // Add validity column with SVG icons using the helper and right alignment
@@ -78,10 +102,9 @@ class TaxCrudController extends CrudController
             'value' => function ($entry) {
                 return ValidationIconHelper::getValidationIcon($entry->isValid());
             },
-            'wrapper' => [
-                'element' => 'span',
-                'class' => 'text-end d-block' // Use text-end for right alignment
-            ],
+            'width' => '50px',
+            'headerAlign' => 'center',
+            'cellAlign' => 'center',
             'orderable' => false,
             'searchLogic' => false,
             'visibleInExport' => true,
