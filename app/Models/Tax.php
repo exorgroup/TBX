@@ -62,6 +62,10 @@ class Tax extends Model
 
     public function isValid()
     {
+        // If signature is null, the record is invalid
+        if (empty($this->SHASignature)) {
+            return false;
+        }
         $data = [
             $this->TaxName,
             $this->formatTaxRate($this->TaxRate),

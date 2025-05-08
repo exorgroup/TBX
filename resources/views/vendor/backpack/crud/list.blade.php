@@ -202,28 +202,71 @@
 
   {{-- CRUD LIST CONTENT - crud_list_styles stack --}}
   @stack('crud_list_styles')
+
+   <style>
+        .row-invalid {
+          background-color: #f8d7da !important; /* Light red background */
+          border: 1px solid #e24b57 !important; /* 1px solid red border on all sides */
+          /*border-left-width: 5px !important;  Override right border width to 5px */
+        }
+
+        tr.row-invalid td:nth-child(even) { /* Specifically target even cells in invalid rows for box-shadow removal */
+            box-shadow: none !important;
+        }
+
+        tr.row-invalid td {
+            --tblr-table-accent-bg: #f0d0d3 !important; /* Override the accent background */
+        }
+
+    </style>
 @endsection
 
 @section('after_scripts')
   @include('crud::inc.datatables_logic')
 
   {{-- Add custom script to apply cell alignment styles --}}
-  <script>
-    $(document).ready(function() {
-      // Apply cell alignment styles from the data-cell-style attribute
-      $('#crudTable').on('draw.dt', function() {
-        $('#crudTable thead th').each(function(index) {
-          var cellStyle = $(this).data('cell-style');
-          if (cellStyle) {
-            $('#crudTable tbody tr').each(function() {
-              $(this).find('td:eq(' + index + ')').attr('style', cellStyle);
+ <script>
+        $(document).ready(function() {
+            var crudTable = $('#crudTable').DataTable();
+
+            // Apply cell alignment styles
+            crudTable.on('draw.dt', function() {
+                $('#crudTable thead th').each(function(index) {
+                    var cellStyle = $(this).data('cell-style');
+                    if (cellStyle) {
+                        $('#crudTable tbody tr').each(function() {
+                            $(this).find('td:eq(' + index + ')').attr('style', cellStyle);
+                        });
+                    }
+                });
+
+                // Apply row class by searching for the 'invalid-row-check' value in any column
+                crudTable.rows().every(function() {
+                    var rowData = this.data();
+                    var isInvalidRow = false;
+                    var isValidRow = false;
+
+                    for (var i = 0; i < rowData.length; i++) {
+                        var cellValue = $(rowData[i]).text().trim();
+                        if (cellValue === 'invalid-row-check') {
+                            isInvalidRow = true;
+                            break; // No need to check further once found
+                        } else if (cellValue === 'valid-row-check') {
+                            isValidRow = true;
+                        }
+                    }
+                    if (isInvalidRow) {
+                        $(this.node()).addClass('row-invalid');
+                    } else if (isValidRow) {
+                        $(this.node()).removeClass('row-invalid');
+                    }
+                });
             });
-          }
         });
-      });
-    });
-  </script>
+    </script>
 
   {{-- CRUD LIST CONTENT - crud_list_scripts stack --}}
   @stack('crud_list_scripts')
+
+  
 @endsection

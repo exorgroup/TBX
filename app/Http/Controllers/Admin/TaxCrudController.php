@@ -110,6 +110,20 @@ class TaxCrudController extends MyCrudController
             'visibleInExport' => true,
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'is_valid_row_class',
+            'visibleInTable' => false,
+            'visibleInModal' => false,
+            'visibleInExport' => false,
+            'visibleInShow' => false,
+            'type'      => 'text', // Add the 'type'
+            'value'     => function ($entry) {
+                return !$entry->isValid() ? 'invalid-row-check' : 'valid-row-check';
+            },
+            'searchLogic' => false, // Prevent searching on this dummy column
+            'orderable'   => false, // Prevent ordering on this dummy column
+        ]);
+
         // Enable responsive table
         $this->crud->enableResponsiveTable();
 
