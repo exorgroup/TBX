@@ -4,7 +4,13 @@
     </span>
 @else
     <span class="crud_bulk_actions_checkbox">
-        <input type="checkbox" class="crud_bulk_actions_line_checkbox form-check-input" data-primary-key-value="{{ $entry->getKey() }}">
+        {{-- Check if the record is valid or user is admin --}}
+        @if (!method_exists($entry, 'isValid') || $entry->isValid() || backpack_user()->hasRole('Administrator'))
+            <input type="checkbox" class="crud_bulk_actions_line_checkbox form-check-input" data-primary-key-value="{{ $entry->getKey() }}">
+        @else
+            {{-- Disabled checkbox for invalid records (non-admin users) --}}
+            <input type="checkbox" class="crud_bulk_actions_line_checkbox form-check-input disabled" disabled title="Only administrators can select invalid records" style="opacity: 0.6; cursor: not-allowed;">
+        @endif
     </span>
 
     @bassetBlock('backpack/crud/operations/list/bulk-actions-checkbox.js')
@@ -13,7 +19,7 @@
         function addOrRemoveCrudCheckedItem(element) {
             crud.lastCheckedItem = false;
 
-            document.querySelectorAll('input.crud_bulk_actions_line_checkbox').forEach(checkbox => checkbox.onclick = e => {
+            document.querySelectorAll('input.crud_bulk_actions_line_checkbox:not([disabled])').forEach(checkbox => checkbox.onclick = e => {
                 e.stopPropagation();
 
                 let checked = checkbox.checked;
@@ -36,7 +42,8 @@
                         
                         while(first !== last) {
                             first = firstIndex < lastIndex ? first.nextElementSibling : first.previousElementSibling;
-                            first.querySelector('input.crud_bulk_actions_line_checkbox:not(:checked)')?.click();
+                            // Only check checkboxes that are not disabled
+                            first.querySelector('input.crud_bulk_actions_line_checkbox:not(:checked):not([disabled])')?.click();
                         }
                     }
 
@@ -90,13 +97,14 @@
     if (typeof addBulkActionMainCheckboxesFunctionality !== 'function') {
         function addBulkActionMainCheckboxesFunctionality() {
             let mainCheckboxes = Array.from(document.querySelectorAll('input.crud_bulk_actions_general_checkbox'));
-            let rowCheckboxes = Array.from(document.querySelectorAll('input.crud_bulk_actions_line_checkbox'));
+            let rowCheckboxes = Array.from(document.querySelectorAll('input.crud_bulk_actions_line_checkbox:not([disabled])'));
 
             mainCheckboxes.forEach(checkbox => {
-                // set initial checked status
-                checkbox.checked = document.querySelectorAll('input.crud_bulk_actions_line_checkbox:not(:checked)').length === 0;
+                // set initial checked status - only count enabled checkboxes
+                checkbox.checked = rowCheckboxes.length > 0 && 
+                    document.querySelectorAll('input.crud_bulk_actions_line_checkbox:not([disabled]):not(:checked)').length === 0;
 
-                // when the crud_bulk_actions_general_checkbox is selected, toggle all visible checkboxes
+                // when the crud_bulk_actions_general_checkbox is selected, toggle all visible checkboxes that are not disabled
                 checkbox.onclick = event => {
                     rowCheckboxes.filter(elem => checkbox.checked !== elem.checked).forEach(elem => elem.click());
                     
@@ -118,10 +126,27 @@
         }
     }
 
+    // Highlight invalid rows for everyone, but only disable checkboxes for non-admins
+    if (typeof highlightInvalidRows !== 'function') {
+        function highlightInvalidRows() {
+            document.querySelectorAll('#crudTable tbody tr').forEach(function(row) {
+                // Check if this row contains the invalid-row-check marker
+                if (row.innerHTML.indexOf('invalid-row-check') !== -1) {
+                    // Add the invalid row class for styling
+                    row.classList.add('row-invalid');
+                } else {
+                    // Ensure the row doesn't have the invalid class if it's valid
+                    row.classList.remove('row-invalid');
+                }
+            });
+        }
+    }
+
     crud.addFunctionToDataTablesDrawEventQueue('addOrRemoveCrudCheckedItem');
     crud.addFunctionToDataTablesDrawEventQueue('markCheckboxAsCheckedIfPreviouslySelected');
     crud.addFunctionToDataTablesDrawEventQueue('addBulkActionMainCheckboxesFunctionality');
     crud.addFunctionToDataTablesDrawEventQueue('enableOrDisableBulkButtons');
+    crud.addFunctionToDataTablesDrawEventQueue('highlightInvalidRows');
     </script>
     @endBassetBlock
 @endif

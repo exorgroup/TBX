@@ -7,8 +7,8 @@
     <x-backpack::menu-dropdown-item title="Roles" icon="la la-group" :link="backpack_url('role')" />
     <x-backpack::menu-dropdown-item title="Permissions" icon="la la-key" :link="backpack_url('permission')" />
      <x-backpack::menu-dropdown-header title="Support" />
-     @if (backpack_user()->can('Tax_Read'))
-        <x-backpack::menu-dropdown-item title="Tax" icon="la la-percentage" :link="backpack_url('tax')" />
+     @if(backpack_user()->can('Tax_Read') || backpack_user()->hasRole('Administrator'))
+        <x-backpack::menu-dropdown-item title="Tax Perm" icon="la la-percentage" :link="backpack_url('tax')" />
     @endif
     <x-backpack::menu-dropdown-item title="Tax us" icon="la la-percentage" :link="backpack_url('tax')" />
 </x-backpack::menu-dropdown>

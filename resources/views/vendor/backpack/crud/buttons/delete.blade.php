@@ -1,8 +1,16 @@
 @if ($crud->hasAccess('delete', $entry))
-    <a href="javascript:void(0)" onclick="deleteEntry(this)" bp-button="delete" 
-    data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-outline-danger btn-pill" data-button-type="delete">
-        <i class="la la-trash"></i> <span>{{ trans('backpack::crud.delete') }}</span>
-    </a>
+    {{-- Check if the record is valid or user is admin --}}
+    @if (!method_exists($entry, 'isValid') || $entry->isValid() || backpack_user()->hasRole('Administrator'))
+        <a href="javascript:void(0)" onclick="deleteEntry(this)" bp-button="delete" 
+        data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-sm btn-outline-danger btn-pill" data-button-type="delete">
+            <i class="la la-trash"></i> <span>{{ trans('backpack::crud.delete') }}</span>
+        </a>
+    @else
+        {{-- Disabled delete button for invalid records (non-admin users) --}}
+        <a href="javascript:void(0)" bp-button="delete" class="btn btn-sm btn-outline-danger btn-pill disabled" onclick="return false;" title="Only administrators can delete invalid records" style="opacity: 0.6; cursor: not-allowed;">
+            <i class="la la-trash"></i> <span>{{ trans('backpack::crud.delete') }}</span>
+        </a>
+    @endif
 @endif
 
 {{-- Button Javascript --}}

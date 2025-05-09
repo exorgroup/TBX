@@ -1,6 +1,12 @@
 @if ($crud->hasAccess('clone', $entry))
-	<a href="javascript:void(0)" onclick="cloneEntry(this)" bp-button="clone" 
-    data-route="{{ url($crud->route.'/'.$entry->getKey().'/clone') }}" class="btn btn-sm btn-outline-secondary btn-pill" data-button-type="clone"><i class="la la-copy"></i> <span>{{ trans('backpack::crud.clone') }}</span></a>
+    {{-- Check if the record is valid or user is admin --}}
+    @if (!method_exists($entry, 'isValid') || $entry->isValid() || backpack_user()->hasRole('Administrator'))
+        <a href="javascript:void(0)" onclick="cloneEntry(this)" bp-button="clone" 
+        data-route="{{ url($crud->route.'/'.$entry->getKey().'/clone') }}" class="btn btn-sm btn-outline-secondary btn-pill" data-button-type="clone"><i class="la la-copy"></i> <span>{{ trans('backpack::crud.clone') }}</span></a>
+    @else
+        {{-- Disabled clone button for invalid records (non-admin users) --}}
+        <a href="javascript:void(0)" bp-button="clone" class="btn btn-sm btn-outline-secondary btn-pill disabled" onclick="return false;" title="Only administrators can clone invalid records" style="opacity: 0.6; cursor: not-allowed;"><i class="la la-copy"></i> <span>{{ trans('backpack::crud.clone') }}</span></a>
+    @endif
 @endif
 
 {{-- Button Javascript --}}

@@ -30,25 +30,47 @@ class TaxCrudController extends MyCrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/tax');
         CRUD::setEntityNameStrings('tax', 'taxes');
 
+        $this->setupPermissions();
+
         // Set the action column styling
         $this->setActionsColumnWidth('320px');
         $this->setActionsHeaderAlign('center');
         $this->setActionsCellAlign('center');
+    }
 
-        // Add permission checks for all operations
-        if (!backpack_user()->can('Tax_Read')) {
+    /**
+     * Setup permissions for CRUD operations
+     */
+    protected function setupPermissions()
+    {
+        // Check permissions before proceeding
+        if (!backpack_user()->can('Tax_Read') && !backpack_user()->hasRole('Administrator')) {
+            // This prevents access to any operation
+            abort(403, 'You do not have permission to access this page.');
+        }
+
+        // Check if user has Read permission or is Administrator
+        if (!backpack_user()->can('Tax_Read') && !backpack_user()->hasRole('Administrator')) {
             $this->crud->denyAccess(['list', 'show']);
         }
-        if (!backpack_user()->can('Tax_Create')) {
+
+        // Check Create permission
+        if (!backpack_user()->can('Tax_Create') && !backpack_user()->hasRole('Administrator')) {
             $this->crud->denyAccess(['create', 'clone', 'bulkClone']);
         }
-        if (!backpack_user()->can('Tax_Update')) {
+
+        // Check Update permission
+        if (!backpack_user()->can('Tax_Update') && !backpack_user()->hasRole('Administrator')) {
             $this->crud->denyAccess('update');
         }
-        if (!backpack_user()->can('Tax_Delete')) {
+
+        // Check Delete permission
+        if (!backpack_user()->can('Tax_Delete') && !backpack_user()->hasRole('Administrator')) {
             $this->crud->denyAccess(['delete', 'bulkDelete']);
         }
     }
+
+
 
     /**
      * Define what happens when the List operation is loaded.
