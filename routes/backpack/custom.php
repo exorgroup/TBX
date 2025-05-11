@@ -23,6 +23,7 @@ Route::group([
     Route::group(['middleware' => ['can:Tax_Read']], function () {
         Route::crud('tax', 'TaxCrudController');
     });
+    Route::crud('audit-owen', 'AuditOwenCrudController');
 }); // this should be the absolute last line of this file
 
 /**

@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\Security;
 use Illuminate\Support\Facades\Log;
 
-class Tax extends Model
+use App\Traits\AuditOwen; // Import your custom trait
+use OwenIt\Auditing\Contracts\Auditable; // Import the interface
+
+class Tax extends Model implements Auditable
 {
     use CrudTrait;
     use SoftDeletes;
+    use AuditOwen; // Use your custom trait
 
     /*
     |--------------------------------------------------------------------------
