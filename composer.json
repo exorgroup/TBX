@@ -10,13 +10,15 @@
         "backpack/crud": "^6.8",
         "backpack/permissionmanager": "^7.2",
         "backpack/pro": "^2.2",
+        "backpack/revise-operation": "^2.0",
         "backpack/theme-tabler": "^1.2",
         "laravel/breeze": "^2.3",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
         "livewire/volt": "^1.7.0",
-        "owen-it/laravel-auditing": "^14.0"
+        "owen-it/laravel-auditing": "^14.0",
+        "venturecraft/revisionable": "^1.42"
     },
     "require-dev": {
         "backpack/generators": "^4.0",

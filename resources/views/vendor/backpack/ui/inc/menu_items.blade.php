@@ -15,4 +15,4 @@
 
 
 
-<x-backpack::menu-item title="Audit owens" icon="la la-question" :link="backpack_url('audit-owen')" />
+<x-backpack::menu-item title="System Audit" icon="la la-question" :link="backpack_url('system-audit')" />

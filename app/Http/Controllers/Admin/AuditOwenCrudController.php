@@ -28,8 +28,8 @@ class AuditOwenCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\AuditOwen::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/audit-owen');
-        CRUD::setEntityNameStrings('audit owen', 'audit owens');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/system-audit');
+        CRUD::setEntityNameStrings('System Audit', 'System Audit');
     }
 
     /**
@@ -60,8 +60,8 @@ class AuditOwenCrudController extends CrudController
     {
         // Set the model and route for the CRUD
         CRUD::setModel(\App\Models\AuditOwen::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/audit-owen');
-        CRUD::setEntityNameStrings('Owen Audit Log', 'Owen Audit Logs');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/system-audit');
+        CRUD::setEntityNameStrings('System Audit', 'System Audit');
 
         // Configure columns
         $this->crud->set('show.setFromDb', false);
@@ -194,7 +194,7 @@ class AuditOwenCrudController extends CrudController
             'label' => 'Actions',
             'type' => 'custom_html',
             'value' => function ($entry) {
-                return '<a href="' . backpack_url('audit-owen/' . $entry->id . '/show') . '" class="btn btn-sm btn-outline-success btn-pill"><i class="la la-eye"></i> Preview</a>';
+                return '<a href="' . backpack_url('system-audit/' . $entry->id . '/show') . '" class="btn btn-sm btn-outline-success btn-pill"><i class="la la-eye"></i> Preview</a>';
             }
         ]);
 
@@ -240,8 +240,8 @@ class AuditOwenCrudController extends CrudController
     {
         // Set the model and route
         CRUD::setModel(\App\Models\AuditOwen::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/audit-owen');
-        CRUD::setEntityNameStrings('Owen Audit Log', 'Owen Audit Logs');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/system-audit');
+        CRUD::setEntityNameStrings('System Audit', 'System Audit');
 
         // Remove default buttons
         CRUD::removeAllButtons();

@@ -10,12 +10,16 @@ use Illuminate\Support\Facades\Log;
 
 use App\Traits\AuditOwen; // Import your custom trait
 use OwenIt\Auditing\Contracts\Auditable; // Import the interface
+use \Venturecraft\Revisionable\RevisionableTrait;
+
+
 
 class Tax extends Model implements Auditable
 {
     use CrudTrait;
     use SoftDeletes;
     use AuditOwen; // Use your custom trait
+    use RevisionableTrait; // Use the Revisionable trait
 
     /*
     |--------------------------------------------------------------------------
@@ -79,6 +83,14 @@ class Tax extends Model implements Auditable
         //    Log::info('3 Stored Signature: ' . $this->SHASignature);
 
         return Security::checkData($data, $this->SHASignature);
+    }
+
+    /**
+     * @return string
+     */
+    public function identifiableName()
+    {
+        return $this->name ?? $this->id; // Return an attribute that identifies the model
     }
 
     /*
