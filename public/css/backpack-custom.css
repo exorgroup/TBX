@@ -105,3 +105,16 @@
     margin: 10px !important;
     padding: 15px !important;
 }
+
+/* Style for hint text in Backpack forms using the help-block class */
+.form-group p.help-block {
+    font-style: italic; /* Example: make the text italic */
+    color: #6c757d; /* Example: use a slightly darker gray */
+    font-size: 0.875em; /* Example: make the font slightly smaller */
+    margin-top: 0.25rem; /* Example: add a little space above */
+    /* Add any other styles you want here */
+    /* For example: */
+    /* font-weight: normal; */
+    /* padding-left: 5px; */
+    /* border-left: 2px solid #ccc; */
+}

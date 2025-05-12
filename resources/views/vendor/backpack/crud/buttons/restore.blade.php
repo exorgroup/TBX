@@ -1,6 +1,11 @@
 @if ($crud->hasAccess('restore', $entry) && $entry->trashed())
 	<a href="javascript:void(0)" onclick="restoreEntry(this)" bp-button="restore" 
-    data-route="{{ url($crud->route.'/'.$entry->getKey().'/restore') }}" class="btn btn-sm btn-outline-secondary btn-pill" data-button-type="restore"><i class="la la-recycle"></i> <span>{{ trans('backpack/pro::trash.restore') }}</span></a>
+    data-route="{{ url($crud->route.'/'.$entry->getKey().'/restore') }}"  data-toggle="tooltip" 
+        title="{{ trans('backpack/pro::trash.restore') }}"
+	class="btn btn-icon btn-outline-secondary btn-pill" data-button-type="restore">
+		<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-restore"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3.06 13a9 9 0 1 0 .49 -4.087" /><path d="M3 4.001v5h5" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+		
+	</a>
 @endif
 
 {{-- Button Javascript --}}

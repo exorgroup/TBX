@@ -227,6 +227,8 @@
   {{-- Add custom script to apply cell alignment styles --}}
  <script>
         $(document).ready(function() {
+
+          $('[data-toggle="tooltip"]').tooltip(); 
             var crudTable = $('#crudTable').DataTable();
 
             // Apply cell alignment styles

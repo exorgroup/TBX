@@ -35,9 +35,12 @@ class TaxCrudController extends MyCrudController
         $this->setupPermissions();
 
         // Set the action column styling
-        $this->setActionsColumnWidth('320px');
+        $this->setActionsColumnWidth('200px');
         $this->setActionsHeaderAlign('center');
         $this->setActionsCellAlign('center');
+        // Enable edit confirmation for this CRUD
+        $this->crud->set('confirm_edit_operation', true); // <-- Add this line
+
     }
 
     /**
@@ -69,6 +72,10 @@ class TaxCrudController extends MyCrudController
         // Check Delete permission
         if (!backpack_user()->can('Tax_Delete') && !backpack_user()->hasRole('Administrator')) {
             $this->crud->denyAccess(['delete', 'bulkDelete']);
+        }
+
+        if (!backpack_user()->can('Tax_History') && !backpack_user()->hasRole('Administrator')) {
+            $this->crud->denyAccess('revise');
         }
     }
 

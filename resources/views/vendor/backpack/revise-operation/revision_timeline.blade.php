@@ -1,4 +1,3 @@
-
 <div id="timeline">
 @foreach($revisions as $revisionDate => $dateRevisions)
       <h3 class="text-primary">

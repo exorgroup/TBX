@@ -215,6 +215,12 @@
                     $icon = '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>';
                     $tooltipTitle = 'print';
                     break;
+
+                  
+                  case 'History':
+                    $icon = '<svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-history"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-history"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 8l0 4l2 2" /><path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" /></svg>';
+                    $tooltipTitle = 'history';
+                    break;
                   default:
                     $icon = $permission;
                     $tooltipTitle = $permission;
@@ -267,7 +273,7 @@
                   @endif
                 >
                 <span class="permission-btn" data-toggle="tooltip" data-placement="bottom" title="{{ $tooltipTitle }}">
-                  @if(in_array($permission, ['View', 'Read', 'New', 'Add', 'Create', 'Update', 'Edit', 'Delete', 'Print']))
+                  @if(in_array($permission, ['View', 'Read', 'New', 'Add', 'Create', 'Update', 'Edit', 'Delete', 'Print', 'History']))
                     {!! $icon !!}
                   @else
                     <span class="custom-permission-text">{{ $icon }}</span>
